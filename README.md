@@ -8,18 +8,18 @@ download from  the GitHub link below
 https://github.com/ou-developers/ou-generativeai-pro/tree/main/labs
 
 
-# Generate RSA key pair (Private Key in PEM format)
-# Note: OCI API requires the private key to be in RSA PEM format.
+#-- Generate RSA key pair (Private Key in PEM format) # 
+#-- Note: OCI API requires the private key to be in RSA PEM format. #
 ssh-keygen -t rsa -b 2048 -m PEM -f ../labskey.pem -N ""
 
-# Generate the Public Key (for Instance SSH Access)
-# (This is automatically created as ../labskey.pem.pub, rename if needed)
-# ssh-keygen -y -f ../labskey.pem > ../labskey.pub
+<!-- # Generate the Public Key (for Instance SSH Access) -->
+<!-- # (This is automatically created as ../labskey.pem.pub, rename if needed) -->
+<!-- # ssh-keygen -y -f ../labskey.pem > ../labskey.pub -->
 
 # Convert Public Key to PKCS8 PEM format (for OCI Console API Key upload)
 ssh-keygen -e -m PKCS8 -f ../labskey.pem.pub > ../labskey_api.pub.pem
 
-# ====== setting note. to change update the terraform/variables.tf file ===== #
+<!-- # ====== setting note. to change update the terraform/variables.tf file ===== #
 ## VCN 
 # GENAI-LAB-VCN
 # 10.7.0.0/16
@@ -33,53 +33,53 @@ ssh-keygen -e -m PKCS8 -f ../labskey.pem.pub > ../labskey_api.pub.pem
 # AD 1; on-demand, OL 8
 # VM.Standard.E5.Flex; VCPU 2, RAM 24
 # shield instance, Enabled SMT
-# Boot volume 100G
+# Boot volume 100G -->
 
 
 ## API key
-## add public key to user - My Profile - Tokens and Keys - add API key - use pem key
+ add public key to user - My Profile - Tokens and Keys - add API key - use pem key
 
-# Edit variable tf and export to local terraform folder
+## Edit variable tf and export to local terraform folder
 
 edit terraform/variables.tf
 
-# --- terraform part --- #
+## --- terraform part --- #
 cd terraform
 export ****ENV***var*** 
 terraform init
 terraform plan
 terraform apply
 
-#  Enter a value: yes
+<!-- #  Enter a value: yes
 # oci_core_vcn.genai_vcn: Creating...
 # oci_core_nat_gateway.genai_nat: Creating...
 # oci_core_internet_gateway.genai_ig: Creating...
 # oci_core_service_gateway.genai_sg: Creating...
 # oci_core_security_list.private_sl: Creating...
-# oci_core_security_list.public_sl: Creating...
+# oci_core_security_list.public_sl: Creating... -->
 
 
 # Output 
 instance_id = ""
 instance_public_ip = ""
 
-# --- SSH to the host --- #
-# get public_ip from  terraform output 
+## --- SSH to the host --- #
+<!-- # get public_ip from  terraform output  -->
 
 cd ..
 ssh -i labskey  opc@<instance_id>
 
 
-# --- checking install status / Troubleshooting on instance 
+## --- checking install status / Troubleshooting on instance 
 sudo tail -f /var/log/cloud-init-output.log
 less /var/log/cloud-init-output.log
 
-# --- look for following ---
+<!-- # --- look for following ---
 # Files successfully downloaded to /home/opc/labs
 # ===== Cloud-Init Script Completed Successfully =====
-# Cloud-init v. 24.4-4.0.1.el9_6.3 finished at Wed, 04 Feb 2026 04:39:29 +0000. Datasource DataSourceOracle.  Up 935.83 seconds
+# Cloud-init v. 24.4-4.0.1.el9_6.3 finished at Wed, 04 Feb 2026 04:39:29 +0000. Datasource DataSourceOracle.  Up 935.83 seconds -->
 
-# --- Firewall seeting on instance --- #
+###  Firewall seeting on instance 
 sudo firewall-cmd --zone=public --add-port=8888/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=8501/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=1521/tcp --permanent
@@ -98,9 +98,9 @@ tree $HOME/labs
 ## Start JupyterLab Server
 nohup jupyter-lab --no-browser --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password='' --port 8888 &
 
-# use browser for Jupyer
+## use browser for Jupyer
 access following using a browser
 http://<instance_ip_address>:8888/
 
-# --- Jupyter server ready at the instance ---
-# ================= END ================= #
+<!-- # --- Jupyter server ready at the instance --- -->
+<!-- # ================= END ================= # -->

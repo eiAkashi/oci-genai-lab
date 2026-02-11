@@ -3,13 +3,13 @@ This document is to guide how to use terraform to spin off OCI Generative AI Lab
 For Generative AI Lab, start with Python library and Jupyter Notebook for data science and machine learning basic environment. Then there need to test RAG using Generative AI service and Oracle 23 ai Vector Search, langChain framework, with chatbot.
 
 # Preparation
-bash script file - init-genailabs.sh
+bash script file - init-genailabs.sh 
 download from  the GitHub link below 
-https://github.com/ou-developers/ou-generativeai-pro/tree/main/labs
+https://github.com/ou-developers/ou-generativeai-pro/tree/main/labs 
 
 
-#-- Generate RSA key pair (Private Key in PEM format) # 
-#-- Note: OCI API requires the private key to be in RSA PEM format. #
+<!-- #-- Generate RSA key pair (Private Key in PEM format) # 
+#-- Note: OCI API requires the private key to be in RSA PEM format. # -->
 ssh-keygen -t rsa -b 2048 -m PEM -f ../labskey.pem -N ""
 
 <!-- # Generate the Public Key (for Instance SSH Access) -->
@@ -28,27 +28,35 @@ ssh-keygen -e -m PKCS8 -f ../labskey.pem.pub > ../labskey_api.pub.pem
 ## Default Security List for GENAI-LAB-VCN
 # add Ingress_Rule: 8888,8501,1521  
 
-## Instance
-# Instance: GEN-AI-lab-Instance
-# AD 1; on-demand, OL 8
-# VM.Standard.E5.Flex; VCPU 2, RAM 24
-# shield instance, Enabled SMT
+## Instance 
+# Instance: GEN-AI-lab-Instance  
+# AD 1; on-demand, OL 8 
+# VM.Standard.E5.Flex; VCPU 2, RAM 24 
+# shield instance, Enabled SMT 
 # Boot volume 100G -->
 
 
 ## API key
- add public key to user - My Profile - Tokens and Keys - add API key - use pem key
+ add public key to user - My Profile - Tokens and Keys - add API key - use pem key 
 
-## Edit variable tf and export to local terraform folder
+## Edit variable tf and export to local terraform folder 
 
-edit terraform/variables.tf
+edit terraform/variables.tf 
 
 ## --- terraform part --- #
 cd terraform
-export ****ENV***var*** 
-terraform init
-terraform plan
-terraform apply
+<!-- Export the values that you have prepared to local terraform folder -->
+export ****ENV***var***
+<!-- export  TF_VAR_user_ocid="" -->
+<!-- export  TF_VAR_fingerprint="" -->
+<!-- export  TF_VAR_tenancy_ocid="" -->
+<!-- export  TF_VAR_private_key_path="" -->
+<!-- export  TF_VAR_region="" -->
+<!-- export  TF_VAR_compartment_ocid="" -->
+
+terraform init 
+terraform plan 
+terraform apply 
 
 <!-- #  Enter a value: yes
 # oci_core_vcn.genai_vcn: Creating...
@@ -80,27 +88,27 @@ less /var/log/cloud-init-output.log
 # Cloud-init v. 24.4-4.0.1.el9_6.3 finished at Wed, 04 Feb 2026 04:39:29 +0000. Datasource DataSourceOracle.  Up 935.83 seconds -->
 
 ###  Firewall seeting on instance 
-sudo firewall-cmd --zone=public --add-port=8888/tcp --permanent
-sudo firewall-cmd --zone=public --add-port=8501/tcp --permanent
-sudo firewall-cmd --zone=public --add-port=1521/tcp --permanent
-sudo firewall-cmd --reload
+sudo firewall-cmd --zone=public --add-port=8888/tcp --permanent 
+sudo firewall-cmd --zone=public --add-port=8501/tcp --permanent 
+sudo firewall-cmd --zone=public --add-port=1521/tcp --permanent 
+sudo firewall-cmd --reload 
 
-sudo iptables -A INPUT -p tcp --dport 8888 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 8501 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 1521 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 8888 -j ACCEPT 
+sudo iptables -A INPUT -p tcp --dport 8501 -j ACCEPT 
+sudo iptables -A INPUT -p tcp --dport 1521 -j ACCEPT 
 
 ### Verifying the updates
-cd labs/
-source $HOME/.bashrc
-python --version
-tree $HOME/labs
+cd labs/ 
+source $HOME/.bashrc 
+python --version 
+tree $HOME/labs 
 
 ## Start JupyterLab Server
-nohup jupyter-lab --no-browser --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password='' --port 8888 &
+nohup jupyter-lab --no-browser --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password='' --port 8888 & 
 
 ## use browser for Jupyer
-access following using a browser
-http://<instance_ip_address>:8888/
+access following using a browser 
+http://<instance_ip_address>:8888/ 
 
 <!-- # --- Jupyter server ready at the instance --- -->
 <!-- # ================= END ================= # -->

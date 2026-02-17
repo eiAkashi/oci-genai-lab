@@ -7,11 +7,11 @@ bash script file - init-genailabs.sh
 download from  the GitHub link below  
 https://github.com/ou-developers/ou-generativeai-pro/tree/main/labs 
 
-<!-- #-- Generate RSA key pair (Private Key in PEM format) # 
-#-- Note: OCI API requires the private key to be in RSA PEM format. # -->
+Generate RSA key pair (Private Key in PEM format) 
+Note: OCI API requires the private key to be in RSA PEM format. 
 ssh-keygen -t rsa -b 2048 -m PEM -f ../labskey.pem -N ""
 
-<!-- # Generate the Public Key (for Instance SSH Access) -->
+Generate the Public Key (for Instance SSH Access) 
 <!-- # (This is automatically created as ../labskey.pem.pub, rename if needed) -->
 <!-- # ssh-keygen -y -f ../labskey.pem > ../labskey.pub -->
 
@@ -24,22 +24,24 @@ https://developer.hashicorp.com/terraform/install
 **Lab Subscription**
 https://mylearn.oracle.com/ou/course/oracle-cloud-infrastructure-generative-ai-professional/147932
 
-<!-- # ====== setting note. to change update the terraform/variables.tf file ===== #
-## VCN setting
-# GENAI-LAB-VCN
-# 10.7.0.0/16
-# public: 10.7.0.0/24
-# private: 10.7.1.0/24
-## Default Security List for GENAI-LAB-VCN
-# add Ingress_Rule: 8888,8501,1521  
+====== setting note. to change update the terraform/variables.tf file 
+### VCN setting
+- GENAI-LAB-VCN
+- 10.7.0.0/16
+- public: 10.7.0.0/24
+- private: 10.7.1.0/24
+- Default Security List for GENAI-LAB-VCN
+- add Ingress_Rule: 8888,8501,1521  
 
-## Instance setting
-# Instance: GEN-AI-lab-Instance  
-# AD 1; on-demand, OL 8 
-# VM.Standard.E5.Flex; VCPU 2, RAM 24 
-# shield instance, Enabled SMT 
-# Boot volume 100G -->
+### Instance setting
+- Instance: GEN-AI-lab-Instance  
+- AD 1; on-demand, OL 8 
+- VM.Standard.E5.Flex; VCPU 2, RAM 24 
+- shield instance, Enabled SMT 
+- Boot volume 100G 
+
 Remark: if you don't Gen AI lab subscrition, but want to use in your own account, please adjust the VCPU, RAM and Volume size. 
+
 
 ## API key
  add public key to user - My Profile - Tokens and Keys - add API key - use pem key 
@@ -48,28 +50,30 @@ Remark: if you don't Gen AI lab subscrition, but want to use in your own account
 
 edit terraform/variables.tf 
 
-## --- terraform --- #
+## terraform 
 cd terraform
-<!-- Export the values that you have prepared to local terraform folder -->
-export ****ENV***var***
-<!-- export  TF_VAR_user_ocid="" -->
-<!-- export  TF_VAR_fingerprint="" -->
-<!-- export  TF_VAR_tenancy_ocid="" -->
-<!-- export  TF_VAR_private_key_path="" -->
-<!-- export  TF_VAR_region="" -->
-<!-- export  TF_VAR_compartment_ocid="" -->
 
+### Export the values that you have prepared to local terraform folder 
+export ==== ENV***var===
+- export  TF_VAR_user_ocid="" -->
+- export  TF_VAR_fingerprint="" -->
+- export  TF_VAR_tenancy_ocid="" -->
+- export  TF_VAR_private_key_path="" 
+- export  TF_VAR_region="" 
+- export  TF_VAR_compartment_ocid="" 
+
+### deploy the environment 
 terraform init 
 terraform plan 
 terraform apply 
 
-<!-- #  Enter a value: yes
-# oci_core_vcn.genai_vcn: Creating...
-# oci_core_nat_gateway.genai_nat: Creating...
-# oci_core_internet_gateway.genai_ig: Creating...
-# oci_core_service_gateway.genai_sg: Creating...
-# oci_core_security_list.private_sl: Creating...
-# oci_core_security_list.public_sl: Creating... -->
+--  Enter a value: yes
+ oci_core_vcn.genai_vcn: Creating...
+ oci_core_nat_gateway.genai_nat: Creating...
+ oci_core_internet_gateway.genai_ig: Creating...
+ oci_core_service_gateway.genai_sg: Creating...
+ oci_core_security_list.private_sl: Creating...
+ oci_core_security_list.public_sl: Creating... -->
 
 
 # Output 
@@ -87,10 +91,10 @@ ssh -i labskey  opc@<instance_id>
 sudo tail -f /var/log/cloud-init-output.log
 less /var/log/cloud-init-output.log
 
-<!-- # --- look for following ---
-# Files successfully downloaded to /home/opc/labs
-# ===== Cloud-Init Script Completed Successfully =====
-# Cloud-init v. 24.4-4.0.1.el9_6.3 finished at Wed, 04 Feb 2026 04:39:29 +0000. Datasource DataSourceOracle.  Up 935.83 seconds -->
+ --- look for something like following ---
+ Files successfully downloaded to /home/opc/labs
+ ===== Cloud-Init Script Completed Successfully =====
+ Cloud-init v. 24.4-4.0.1.el9_6.3 finished at Wed, 04 Feb 2026 04:39:29 +0000. Datasource DataSourceOracle.  Up 000.00 seconds 
 
 ###  Firewall seeting on instance 
 sudo firewall-cmd --zone=public --add-port=8888/tcp --permanent 

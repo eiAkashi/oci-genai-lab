@@ -4,9 +4,8 @@ For Generative AI Lab, start with Python library and Jupyter Notebook for data s
 
 # Preparation
 bash script file - init-genailabs.sh 
-download from  the GitHub link below 
+download from  the GitHub link below  
 https://github.com/ou-developers/ou-generativeai-pro/tree/main/labs 
-
 
 <!-- #-- Generate RSA key pair (Private Key in PEM format) # 
 #-- Note: OCI API requires the private key to be in RSA PEM format. # -->
@@ -16,11 +15,17 @@ ssh-keygen -t rsa -b 2048 -m PEM -f ../labskey.pem -N ""
 <!-- # (This is automatically created as ../labskey.pem.pub, rename if needed) -->
 <!-- # ssh-keygen -y -f ../labskey.pem > ../labskey.pub -->
 
-# Convert Public Key to PKCS8 PEM format (for OCI Console API Key upload)
+**Convert Public Key to PKCS8 PEM format (for OCI Console API Key upload)**
 ssh-keygen -e -m PKCS8 -f ../labskey.pem.pub > ../labskey_api.pub.pem
 
+__Terraform installation (if needed)__
+https://developer.hashicorp.com/terraform/install 
+
+**Lab Subscription**
+https://mylearn.oracle.com/ou/course/oracle-cloud-infrastructure-generative-ai-professional/147932
+
 <!-- # ====== setting note. to change update the terraform/variables.tf file ===== #
-## VCN 
+## VCN setting
 # GENAI-LAB-VCN
 # 10.7.0.0/16
 # public: 10.7.0.0/24
@@ -28,13 +33,13 @@ ssh-keygen -e -m PKCS8 -f ../labskey.pem.pub > ../labskey_api.pub.pem
 ## Default Security List for GENAI-LAB-VCN
 # add Ingress_Rule: 8888,8501,1521  
 
-## Instance 
+## Instance setting
 # Instance: GEN-AI-lab-Instance  
 # AD 1; on-demand, OL 8 
 # VM.Standard.E5.Flex; VCPU 2, RAM 24 
 # shield instance, Enabled SMT 
 # Boot volume 100G -->
-
+Remark: if you don't Gen AI lab subscrition, but want to use in your own account, please adjust the VCPU, RAM and Volume size. 
 
 ## API key
  add public key to user - My Profile - Tokens and Keys - add API key - use pem key 
@@ -43,7 +48,7 @@ ssh-keygen -e -m PKCS8 -f ../labskey.pem.pub > ../labskey_api.pub.pem
 
 edit terraform/variables.tf 
 
-## --- terraform part --- #
+## --- terraform --- #
 cd terraform
 <!-- Export the values that you have prepared to local terraform folder -->
 export ****ENV***var***
@@ -106,9 +111,17 @@ tree $HOME/labs
 ## Start JupyterLab Server
 nohup jupyter-lab --no-browser --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password='' --port 8888 & 
 
+
 ## use browser for Jupyer
 access following using a browser 
 http://<instance_ip_address>:8888/ 
 
 <!-- # --- Jupyter server ready at the instance --- -->
+### Demo and Labs 
+follow the demo and labs for chat model, retrieval model, integrate LangChain, Semitic search, RAG with database, test Oracle vector DB, etc.
+
+### Feedback
+feel free to clone and enhance.
+if you have any feedback and suggestion, I am happy to hear that.  
+
 <!-- # ================= END ================= # -->
